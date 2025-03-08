@@ -1,45 +1,42 @@
-import express from "express";
-import dotenv from "dotenv";
-import connectDB from "./configs/connectDB.js";
-import cookieParser from "cookie-parser";
-import authRoutes from "./routes/authRoutes.js";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
+import connectDB from './configS/connectDB.js'; 
+import dotenv from 'dotenv';
+import passport from 'passport';
+import MongoStore from 'connect-mongo';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import authRoute from './routes/authRoute.js';
+import googleAuth from './routes/googleAuth.js';
+import "./configs/passort.js";
+
 
 dotenv.config();
+
 const app = express();
-const port = process.env.PORT || 3000;
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
-    credentials: true
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL}),
+    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
 }));
+app.use(cookieParser());
+app.use(cors());
+connectDB();
 
-app.use("/api/auth", authRoutes);
 
-// Health check route
-app.get("/", (req, res) => {
-    res.json({ message: "API is running" });
-});
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: "Something went wrong!" });
-});
 
-(async () => {
-  try {
-    await connectDB();
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-  } catch (error) {
-    console.error("❌ Failed to connect to MongoDB:", error);
-    process.exit(1); // Stop execution if DB fails to connect
-  }
-})();
+app.get("/", (req, res) => res.send("API is running"));
+app.use("/api/auth",authRoute);
+app.use("/auth",googleAuth)
 
-export default app;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

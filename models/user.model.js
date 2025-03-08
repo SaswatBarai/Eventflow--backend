@@ -1,41 +1,36 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from 'mongoose';
 
-const userSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    imageUrl: String,
-    createdEvent: {
-      type: Schema.Types.ObjectId,
-      ref: "event",
-    },
-    savedEvent: {
-      type: Schema.Types.ObjectId,
-      ref: "event",
-    },
-    firebaseUID: { 
-      type: String, 
-      required: true, 
-      unique: true 
-    },
-    avatar: { 
-      type: String 
-    },
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    // Make password optional for Google Sign-In
+    required: false,
+  },
+  phoneNumber: {
+    type: String,
+    // Make phoneNumber optional for Google Sign-In
+    required: false,
+  },
+  profilePicture: {
+    type: String,
+  },
+  googleId: {
+    type: String,
+    unique: true,
+  },
+});
 
-const User = mongoose.model("user", userSchema);
 
-export default User;
+
+const user = mongoose.model('user', userSchema);
+export default user;
