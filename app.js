@@ -8,6 +8,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import authRoute from './routes/authRoute.js';
 import googleAuth from './routes/googleAuth.js';
+import passwordRoutes from "./routes/passwordRoutes.js";
 import "./configs/passort.js";
 
 
@@ -36,7 +37,9 @@ app.use(passport.session());
 
 app.get("/", (req, res) => res.send("API is running"));
 app.use("/api/auth",authRoute);
-app.use("/auth",googleAuth)
+app.use("/auth",googleAuth);
+app.use("/api/password", passwordRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -23,6 +23,9 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
+      crypto-random-string:
+        specifier: ^5.0.0
+        version: 5.0.0
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -41,6 +44,9 @@ importers:
       mongoose:
         specifier: ^8.12.0
         version: 8.12.0
+      nodemailer:
+        specifier: ^6.10.0
+        version: 6.10.0
       passport:
         specifier: ^0.7.0
         version: 0.7.0
@@ -52,7 +58,7 @@ importers:
         version: 1.0.0
     devDependencies:
       nodemon:
-        specifier: ^2.0.15
+        specifier: ^2.0.22
         version: 2.0.22
 
 packages:
@@ -209,6 +215,10 @@ packages:
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
     engines: {node: '>= 0.10'}
+
+  crypto-random-string@5.0.0:
+    resolution: {integrity: sha512-KWjTXWwxFd6a94m5CdRGW/t82Tr8DoBc9dNnPCAbFI1EBweN6v1tv8y4Y1m7ndkp/nkIBRxUxAzpaBnR2k3bcQ==}
+    engines: {node: '>=14.16'}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -587,6 +597,10 @@ packages:
       encoding:
         optional: true
 
+  nodemailer@6.10.0:
+    resolution: {integrity: sha512-SQ3wZCExjeSatLE/HBaXS5vqUOQk6GtBdIIKxiFdmm01mOQZX/POJkO3SUX1wDiYcwUOJwT23scFSC9fY2H8IA==}
+    engines: {node: '>=6.0.0'}
+
   nodemon@2.0.22:
     resolution: {integrity: sha512-B8YqaKMmyuCO7BowF1Z1/mkPqLk6cs/l63Ojtd6otKjMx47Dq1utxfRxcavH1I7VSaL8n5BUaoutadnsX3AAVQ==}
     engines: {node: '>=8.10.0'}
@@ -812,6 +826,10 @@ packages:
   tr46@5.0.0:
     resolution: {integrity: sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==}
     engines: {node: '>=18'}
+
+  type-fest@2.19.0:
+    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
+    engines: {node: '>=12.20'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -1044,6 +1062,10 @@ snapshots:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
+
+  crypto-random-string@5.0.0:
+    dependencies:
+      type-fest: 2.19.0
 
   debug@2.6.9:
     dependencies:
@@ -1420,6 +1442,8 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
+  nodemailer@6.10.0: {}
+
   nodemon@2.0.22:
     dependencies:
       chokidar: 3.6.0
@@ -1659,6 +1683,8 @@ snapshots:
   tr46@5.0.0:
     dependencies:
       punycode: 2.3.1
+
+  type-fest@2.19.0: {}
 
   type-is@1.6.18:
     dependencies:
