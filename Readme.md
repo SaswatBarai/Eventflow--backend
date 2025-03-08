@@ -61,19 +61,43 @@ EventFlow Backend is a Node.js and Express-based authentication system that supp
 
 ## Folder Structure
 ```
-eventflow-backend/
-│── routes/
+Eventflow--backend
+├── Readme.md
+├── app.js
+├── configs
+│   ├── connectDB.js
+│   └── passort.js
+├── controllers
+│   ├── loginController.js
+│   └── registerController.js
+├── middlewares
+├── models
+│   ├── event.model.js
+│   └── user.model.js
+├── node_modules
+│   ├── bcrypt
+│   ├── bcryptjs
+│   ├── connect-mongo
+│   ├── cookie-parser
+│   ├── cors
+│   ├── dotenv
+│   ├── express
+│   ├── express-session
+│   ├── express-validator
+│   ├── jsonwebtoken
+│   ├── mongoose
+│   ├── nodemon
+│   ├── passport
+│   ├── passport-google-oauth20
+│   └── passport-local
+├── package.json
+├── pnpm-lock.yaml
+├── routes
 │   ├── authRoute.js
-│   ├── googleAuth.js
-│── controllers/
-│── utils/
-│   ├── validate.login.js
-│   ├── validate.reg.js
-│── config/
-│── app.js
-│── package.json
-│── .gitignore
-│── .env (not committed)
+│   └── googleAuth.js
+└── utils
+    ├── validate.login.js
+    └── validate.reg.js
 ```
 
 ## Contributing
