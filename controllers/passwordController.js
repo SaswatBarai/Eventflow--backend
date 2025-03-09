@@ -7,6 +7,8 @@ dotenv.config();
 
 export const requestPasswordReset = async (req, res) => {
   const { email } = req.body;
+  console.log(email);
+  
   try {
     const user = await userModel.findOne({ email });
     if (!user) {

@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-
+import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -28,9 +27,27 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  createdEvents: [{ 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "event",
+  }],
+  savedEvents: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "event",
+  }],
+  registeredEvents: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "event",
+  }],
+  role:{
+    type:String,
+    enum:['user','admin'],
+    default:'user'
+  },
+
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
-});
+},{timestamps:true});
 
 
 

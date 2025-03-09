@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import connectDB from './configS/connectDB.js'; 
+import connectDB from './configs/connectDB.js'; 
 import dotenv from 'dotenv';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
@@ -8,14 +8,14 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import authRoute from './routes/authRoute.js';
 import googleAuth from './routes/googleAuth.js';
-import passwordRoutes from "./routes/passwordRoutes.js";
+import passwordRoutes from './routes/passwordRoutes.js';
+import adminRoutes from './routes/adminAuth.js';
+import eventRoutes from './routes/eventRoutes.js';
 import "./configs/passort.js";
-
 
 dotenv.config();
 
 const app = express();
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,16 +30,17 @@ app.use(cookieParser());
 app.use(cors());
 connectDB();
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.get("/", (req, res) => res.send("API is running"));
-app.use("/api/auth",authRoute);
-app.use("/auth",googleAuth);
+app.use("/api/auth", authRoute);
+app.use("/auth", googleAuth);
 app.use("/api/password", passwordRoutes);
-
+app.use("/api/admin", adminRoutes);
+app.use("/api/events", eventRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;
