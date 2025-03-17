@@ -1,12 +1,11 @@
-import {body} from 'express-validator';
-
+import { body } from 'express-validator';
 
 const validateEvent = [
-    body("title").trim().notEmpty().withMessage("Title is required"),
-    body("description").trim().notEmpty().withMessage("Description is required"),
-    body("date").trim().notEmpty().withMessage("Date is required"),
-    body("time").trim().notEmpty().withMessage("Time is required"),
-    body("location").trim().notEmpty().withMessage("Location is required"),
-]
+  body("title").trim().isEmpty().withMessage("Title is required"),
+  body("description").trim().isEmpty().withMessage("Description is required"),
+  body("date").trim().isEmpty().withMessage("Date is required"),
+  body("time").trim().isEmpty().withMessage("Time is required"),
+  body("location").trim().isEmpty().withMessage("Location is required"),
+];
 
 export default validateEvent;

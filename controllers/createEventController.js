@@ -21,6 +21,8 @@ const createEventController = async (req, res) => {
       isPublic,
       status,
     } = req.body;
+    console.log(req.body);
+    
 
     let imageUrl = null;
     let path = null;
