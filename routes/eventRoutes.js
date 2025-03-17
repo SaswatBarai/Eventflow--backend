@@ -13,6 +13,7 @@ import saveEventController  from "../controllers/saveEventController.js"
 import getSavedEventsController from "../controllers/getSavedEventsController.js"
 import  rsvpEventController from "../controllers/rsvpEventController.js"
 import getRsvpEventsController from "../controllers/getRsvpEventsController.js"
+import getAllAttendeesController from "../controllers/getAllAttendeesController.js"
 
 const router = express.Router();
 
@@ -33,7 +34,10 @@ router.get("/savedEvents", authMiddleware, getSavedEventsController);
 
 router.post("/rsvp/:id", authMiddleware, rsvpEventController);
 router.get("/rsvpEvents", authMiddleware, getRsvpEventsController);
-// router.get("/rsvp/attendees", authMiddleware, getAllAttendeesController);
+
+
+//This route is for the admin to get all attendees of an event
+router.get("/rsvp/attendees/eventId", authMiddleware,adminCheck,getAllAttendeesController);
 
 
 

@@ -32,7 +32,8 @@ const deleteEventController = async (req, res) => {
             user.savedEvents.pull(req.params.id);
             await user.save();
         })
-
+        
+        
         const userWithRegisteredEvent = await userModel.find({ registeredEvents: req.params.id });  
         userWithRegisteredEvent.forEach(async (user)=>{
             user.registeredEvents.pull(req.params.id);
