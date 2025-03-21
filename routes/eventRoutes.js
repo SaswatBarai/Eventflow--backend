@@ -38,6 +38,7 @@ router.get("/rsvpEvents", authMiddleware, getRsvpEventsController);
 
 //This route is for the admin to get all attendees of an event
 router.get("/rsvp/attendees/eventId", authMiddleware,adminCheck,getAllAttendeesController);
+router.post("/rsvp//atteendees/:eventId/:idAttendee", authMiddleware,adminCheck,removeAttendeeController);
 
 
 

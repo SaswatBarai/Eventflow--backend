@@ -10,6 +10,7 @@ const adminCheckMiddleware = async (req, res, next) => {
     if (user.role !== "admin") {
       return res.status(403).json({ msg: "Access denied, admin only" });
     }
+    req.
     next();
   } catch (error) {
     console.error(error);

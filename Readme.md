@@ -1,108 +1,191 @@
-# EventFlow Backend
+# EventFlow Backend API Documentation
 
-EventFlow Backend is a Node.js and Express-based authentication system that supports local and Google OAuth authentication. It uses MongoDB as a database and integrates session management with `express-session` and `connect-mongo`.
+This document provides an overview of the backend API for EventFlow and how frontend developers can interact with it.
 
-## Features
-- User registration and login with validation
-- Google OAuth authentication
-- Session-based authentication using `express-session`
-- JWT-based authentication support
-- Secure password handling with bcrypt
-- Environment variables support via `dotenv`
-
-## Tech Stack
-- **Backend**: Node.js, Express.js
-- **Authentication**: Passport.js (Local & Google OAuth)
-- **Database**: MongoDB with Mongoose
-- **Session Management**: `express-session` with `connect-mongo`
-- **Validation**: `express-validator`
-- **Environment Management**: `dotenv`
-
-## Installation
-
-1. **Clone the repository**
-   ```sh
-   git clone https://github.com/yourusername/eventflow-backend.git
-   cd eventflow-backend
-   ```
-
-2. **Install dependencies**
-   ```sh
-   pnpm install
-   ```
-
-3. **Create a `.env` file** and add the required environment variables (refer to `.env.example`):
-   ```plaintext
-   MONGO_URL=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   SESSION_SECRET=your_session_secret
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
-   ```
-
-4. **Run the server**
-   ```sh
-   pnpm dev
-   ```
-   The server runs on `http://localhost:3000` by default.
-
-## API Endpoints
-
-### Auth Routes (`/api/auth`)
-- `POST /api/auth/register` – Register a new user
-- `POST /api/auth/login` – Log in with email and password
-
-### Google OAuth (`/auth`)
-- `GET /auth/google` – Redirect to Google login
-- `GET /auth/google/callback` – Google OAuth callback
-- `GET /auth/profile` – Get the logged-in user's profile
-- `GET /auth/logout` – Logout the user
-
-## Folder Structure
+## Base URL
+The base URL for the API is:
 ```
-Eventflow--backend
-├── Readme.md
-├── app.js
-├── configs
-│   ├── connectDB.js
-│   └── passort.js
-├── controllers
-│   ├── loginController.js
-│   └── registerController.js
-├── middlewares
-├── models
-│   ├── event.model.js
-│   └── user.model.js
-├── node_modules
-│   ├── bcrypt
-│   ├── bcryptjs
-│   ├── connect-mongo
-│   ├── cookie-parser
-│   ├── cors
-│   ├── dotenv
-│   ├── express
-│   ├── express-session
-│   ├── express-validator
-│   ├── jsonwebtoken
-│   ├── mongoose
-│   ├── nodemon
-│   ├── passport
-│   ├── passport-google-oauth20
-│   └── passport-local
-├── package.json
-├── pnpm-lock.yaml
-├── routes
-│   ├── authRoute.js
-│   └── googleAuth.js
-└── utils
-    ├── validate.login.js
-    └── validate.reg.js
+http://localhost:3000/api
 ```
 
-## Contributing
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+## Authentication
+### 1. **Register User**
+- **Endpoint**: `/auth/register`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "password123",
+    "confirmPassword": "password123"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "msg": "User registered successfully",
+    "user": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "role": "user",
+      "createdAt": "2023-01-01T00:00:00.000Z"
+    }
+  }
+  ```
 
-## License
-This project is licensed under the MIT License.
+### 2. **Login User**
+- **Endpoint**: `/auth/login`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "email": "johndoe@example.com",
+    "password": "password123"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "token": "JWT_TOKEN",
+    "user": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "role": "user"
+    }
+  }
+  ```
+
+### 3. **Google Authentication**
+- **Endpoint**: `/auth/google`
+- **Method**: `GET`
+- Redirects to Google for authentication.
+
+## Events
+### 1. **Create Event**
+- **Endpoint**: `/events/create`
+- **Method**: `POST`
+- **Headers**: 
+  - `Authorization: Bearer <JWT_TOKEN>`
+- **Request Body** (Form Data):
+  ```json
+  {
+    "title": "Event Title",
+    "date": "2023-01-01",
+    "time": "14:00",
+    "location": "Event Location",
+    "description": "Event Description",
+    "image": <file>
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "msg": "Event created successfully",
+    "event": {
+      "title": "Event Title",
+      "date": "2023-01-01",
+      "time": "14:00",
+      "location": "Event Location",
+      "description": "Event Description",
+      "imageUrl": "https://example.com/image.jpg"
+    }
+  }
+  ```
+
+### 2. **Get All Events**
+- **Endpoint**: `/events/allEvents`
+- **Method**: `GET`
+- **Response**:
+  ```json
+  {
+    "events": [
+      {
+        "title": "Event Title",
+        "date": "2023-01-01",
+        "time": "14:00",
+        "location": "Event Location",
+        "description": "Event Description",
+        "imageUrl": "https://example.com/image.jpg",
+        "isRegistered": false,
+        "isSaved": false
+      }
+    ]
+  }
+  ```
+
+### 3. **RSVP to Event**
+- **Endpoint**: `/events/rsvp/:id`
+- **Method**: `POST`
+- **Headers**: 
+  - `Authorization: Bearer <JWT_TOKEN>`
+- **Response**:
+  ```json
+  {
+    "message": "You have successfully registered for the event"
+  }
+  ```
+
+### 4. **Save Event**
+- **Endpoint**: `/events/save/:id`
+- **Method**: `POST`
+- **Headers**: 
+  - `Authorization: Bearer <JWT_TOKEN>`
+- **Response**:
+  ```json
+  {
+    "message": "Event saved successfully"
+  }
+  ```
+
+## Password Management
+### 1. **Request Password Reset**
+- **Endpoint**: `/password/request-password-reset`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "email": "johndoe@example.com"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "msg": "Password reset email sent"
+  }
+  ```
+
+### 2. **Reset Password**
+- **Endpoint**: `/password/reset-password/:token`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "password": "newpassword123"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "msg": "Password has been updated"
+  }
+  ```
+
+## Admin
+### 1. **Become Admin**
+- **Endpoint**: `/admin`
+- **Method**: `POST`
+- **Headers**: 
+  - `Authorization: Bearer <JWT_TOKEN>`
+- **Response**:
+  ```json
+  {
+    "msg": "User has been promoted to admin"
+  }
+  ```
+
+## Notes
+- All protected routes require a valid JWT token in the `Authorization` header.
+- For file uploads, use `multipart/form-data` with the `image` field.
+- Ensure to handle errors and edge cases on the frontend based on the response codes and messages.
 
